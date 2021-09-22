@@ -1,3 +1,7 @@
+import React from "react";
+// App.js includes now a new component: NewExpense, a form for adding a new expense :)
+
+import NewExpense from "./components/NewExpense/NewExpense";
 import Expenses from "./components/Expenses/Expenses";
 
 const App = () => {
@@ -23,7 +27,12 @@ const App = () => {
     },
   ];
 
-  return <Expenses items={expenses}></Expenses>;
+  return (
+    <div>
+      <NewExpense />
+      <Expenses items={expenses} />
+    </div>
+  );
 };
 
 export default App;

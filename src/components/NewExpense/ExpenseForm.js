@@ -3,26 +3,41 @@ import React, { useState } from "react";
 import "./ExpenseForm.css";
 
 const ExpenseForm = () => {
-  const [enteredTitle, setEnteredTitle] = useState("");
-  const [enteredAmount, setEnteredAmount] = useState("");
-  const [enteredDate, setEnteredDate] = useState("");
+  // const [enteredTitle, setEnteredTitle] = useState("");
+  // const [enteredAmount, setEnteredAmount] = useState("");
+  // const [enteredDate, setEnteredDate] = useState("");
 
-  //we get automatically an event object that has a .target.value
-  // we created three methods to store the three inputs in three different states
-  // we just use onChange as attribute in the input elements and invoke the methods (33,39,48)
+  //instead of three states, just one as an object
+  const [enteredInput, setEnteredInput] = useState({
+    enteredTitle: "",
+    enteredAmount: "",
+    enteredDate: "",
+  });
+  // even if you want to change just a key,
+  // you must update all the keys => spread operator and overriding!
+  // if not the other ones just disappear :(
   const titleChangeHandler = (event) => {
-    setEnteredTitle(event.target.value);
-    console.log(enteredTitle);
+    setEnteredInput({
+      ...enteredInput,
+      enteredTitle: event.target.value,
+    });
+    console.log(enteredInput.enteredTitle);
   };
 
   const amountChangeHandler = (event) => {
-    setEnteredAmount(event.target.value);
-    console.log(enteredAmount);
+    setEnteredInput({
+      ...enteredInput,
+      enteredAmount: event.target.value,
+    });
+    console.log(enteredInput.enteredAmount);
   };
 
   const dateChangeHandler = (event) => {
-    setEnteredDate(event.target.value);
-    console.log(enteredDate);
+    setEnteredInput({
+      ...enteredInput,
+      enteredDate: event.target.value,
+    });
+    console.log(enteredInput.enteredDate);
   };
 
   return (

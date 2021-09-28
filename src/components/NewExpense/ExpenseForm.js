@@ -13,29 +13,46 @@ const ExpenseForm = () => {
     enteredAmount: "",
     enteredDate: "",
   });
-  // even if you want to change just a key,
-  // you must update all the keys => spread operator and overriding!
-  // if not the other ones just disappear :(
+
+  // when you depend on the previos state, use this syntax!!!
+  // you will assure that the last updating is really the last one
   const titleChangeHandler = (event) => {
-    setUserInput({
-      ...userInput,
-      enteredTitle: event.target.value,
+    // setUserInput({
+    //   ...userInput,
+    //   enteredTitle: event.target.value,
+    // });
+    // console.log(userInput.enteredTitle);
+    setUserInput((prevState) => {
+      return {
+        ...prevState,
+        enteredTitle: event.target.value,
+      };
     });
     console.log(userInput.enteredTitle);
   };
 
   const amountChangeHandler = (event) => {
-    setUserInput({
-      ...userInput,
-      enteredAmount: event.target.value,
+    // setUserInput({
+    //   ...userInput,
+    //   enteredAmount: event.target.value,
+    // });
+
+    setUserInput((prevState) => {
+      return { ...prevState, enteredAmount: event.target.value };
     });
     console.log(userInput.enteredAmount);
   };
 
   const dateChangeHandler = (event) => {
-    setUserInput({
-      ...userInput,
-      enteredDate: event.target.value,
+    // setUserInput({
+    //   ...userInput,
+    //   enteredDate: event.target.value,
+    // });
+    setUserInput((prevState) => {
+      return {
+        ...prevState,
+        enteredDate: event.target.value,
+      };
     });
     console.log(userInput.enteredDate);
   };

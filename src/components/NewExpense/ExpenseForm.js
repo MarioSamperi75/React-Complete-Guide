@@ -8,7 +8,7 @@ const ExpenseForm = () => {
   // const [enteredDate, setEnteredDate] = useState("");
 
   //instead of three states, just one as an object
-  const [enteredInput, setEnteredInput] = useState({
+  const [userInput, setUserInput] = useState({
     enteredTitle: "",
     enteredAmount: "",
     enteredDate: "",
@@ -17,27 +17,27 @@ const ExpenseForm = () => {
   // you must update all the keys => spread operator and overriding!
   // if not the other ones just disappear :(
   const titleChangeHandler = (event) => {
-    setEnteredInput({
-      ...enteredInput,
+    setUserInput({
+      ...userInput,
       enteredTitle: event.target.value,
     });
-    console.log(enteredInput.enteredTitle);
+    console.log(userInput.enteredTitle);
   };
 
   const amountChangeHandler = (event) => {
-    setEnteredInput({
-      ...enteredInput,
+    setUserInput({
+      ...userInput,
       enteredAmount: event.target.value,
     });
-    console.log(enteredInput.enteredAmount);
+    console.log(userInput.enteredAmount);
   };
 
   const dateChangeHandler = (event) => {
-    setEnteredInput({
-      ...enteredInput,
+    setUserInput({
+      ...userInput,
       enteredDate: event.target.value,
     });
-    console.log(enteredInput.enteredDate);
+    console.log(userInput.enteredDate);
   };
 
   return (

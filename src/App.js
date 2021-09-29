@@ -1,5 +1,10 @@
 import React from "react";
-// App.js includes now a new component: NewExpense, a form for adding a new expense :)
+// We can pass props from parent to child
+// How to pass things from child to parent?
+// we will pass now the new expense to App (ExpenseForm=>NewExpense=>App)
+// Steps: create a function in the parent, pass the function as a props ...
+//... invoke the function from the child and pass things as argument!
+// we have to do it 2 times, ExpenseForm/NewExpense  and NewExpense/App
 
 import NewExpense from "./components/NewExpense/NewExpense";
 import Expenses from "./components/Expenses/Expenses";
@@ -27,9 +32,13 @@ const App = () => {
     },
   ];
 
+  const addExpenseHandler = (expense) => {
+    console.log(expense);
+  };
+
   return (
     <div>
-      <NewExpense />
+      <NewExpense onAddExpense={addExpenseHandler} />
       <Expenses items={expenses} />
     </div>
   );

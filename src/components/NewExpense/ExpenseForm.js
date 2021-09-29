@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import "./ExpenseForm.css";
 
-const ExpenseForm = () => {
+const ExpenseForm = (props) => {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredAmount, setEnteredAmount] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
@@ -64,8 +64,9 @@ const ExpenseForm = () => {
     setEnteredTitle("");
     setEnteredAmount("");
     setEnteredDate("");
-
-    console.log(expenseData);
+    // we use expenseData as argument in a function
+    // that we get as props, but that triggers in the parent (with an argument coming from the child : expenseData)
+    props.onSaveExpenseData(expenseData);
   };
 
   // onSubmit listener would reload the page as default

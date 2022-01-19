@@ -15,6 +15,10 @@ const Expenses = (props) => {
 
   // instead of hardcoding ExpenseItems we transorm (map) the array of expenses
   // to an array of JSX Elements (ExpensesItem)
+
+  // key : we need to add the key to improve performance and avoid bugs
+  // the automatic key  - props.items.map((expense, index) - is discouraged
+  // better to use a unique key that is binded to the item (db id is perfect)
   return (
     <div>
       <Card className="expenses">
@@ -25,6 +29,7 @@ const Expenses = (props) => {
 
         {props.items.map((expense) => (
           <ExpenseItem
+            key={expense.id}
             title={expense.title}
             amount={expense.amount}
             date={expense.date}

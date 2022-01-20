@@ -23,9 +23,10 @@ const ExpenseForm = (props) => {
     //to avoid the page reloading on Submit
     event.preventDefault();
 
+    //+ to convert string to number
     const expenseData = {
       title: enteredTitle,
-      amount: enteredAmount,
+      amount: +enteredAmount,
       date: new Date(enteredDate),
     };
 

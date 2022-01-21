@@ -1,6 +1,7 @@
 import React from "react";
 
 import Card from "../UI/Card";
+import Button from "../UI/Button";
 
 import classes from "./AddUser.module.css";
 
@@ -10,6 +11,8 @@ const AddUser = (props) => {
     event.preventDefault();
   };
 
+  // type is actually a props that we create.
+  // Button is our Component, it has not default attributes
   return (
     <Card className={classes.input}>
       <form onSubmit={addUserHandler}>
@@ -17,7 +20,7 @@ const AddUser = (props) => {
         <input id="username" type="text" />
         <label htmlFor="age">Age (Years)</label>
         <input id="age" type="number" />
-        <button type="submit">Add User</button>
+        <Button type="submit">Add User</Button>
       </form>
     </Card>
   );

@@ -1,4 +1,4 @@
-//import React from "react";
+// import React from "react";
 import styled from "styled-components";
 
 // button is like a method that allows us to set a style to a button
@@ -10,7 +10,12 @@ import styled from "styled-components";
 //Adapting CSS to styled-components : Steps
 // remove the first .button selector and brackets
 // remove .button from sudo-selector and add & instead
+
+// we apply media queries in the usual way
+//check the bottom width: from 100 %  to auto
+
 const Button = styled.button`
+  width: 100%;
   font: inherit;
   padding: 0.5rem 1.5rem;
   border: 1px solid #8b005d;
@@ -18,6 +23,10 @@ const Button = styled.button`
   background: #8b005d;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.26);
   cursor: pointer;
+
+  @media (min-width: 768px) {
+    width: auto;
+  }
 
   &:focus {
     outline: none;

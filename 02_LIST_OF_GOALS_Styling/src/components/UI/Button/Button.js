@@ -5,6 +5,8 @@ import React from "react";
 // in this way the css file is scoped to the component
 // and we have not to change the CSS file
 // we can continue to have it as a separate file
+
+// we can set the media queries in the CSS as usual
 import styles from "./Button.module.css";
 
 // the class becomes an object

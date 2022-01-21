@@ -29,7 +29,9 @@ const CourseInput = (props) => {
   // it allows to use name with -
   return (
     <form onSubmit={formSubmitHandler}>
-      <div className={styles["form-control"]}>
+      <div
+        className={`${styles["form-control"]} ${!isValid && styles.invalid}`}
+      >
         <label>Course Goal</label>
         <input type="text" onChange={goalInputChangeHandler} />
       </div>

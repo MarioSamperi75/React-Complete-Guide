@@ -13,6 +13,10 @@ import "./CourseInput.css";
 // remove the first .formControl selector and brackets
 // remove  the other .button from combined selectors and add & instead
 
+// we can receive props from the componenent
+// and use them in the styling by using arrow function
+// so we can remove the .invalid css classes!
+
 const FormControl = styled.div`
   margin: 0.5rem 0;
 
@@ -20,12 +24,14 @@ const FormControl = styled.div`
     font-weight: bold;
     display: block;
     margin-bottom: 0.5rem;
+    color: ${(props) => (props.invalid ? "red" : "black")};
   }
 
   & input {
     display: block;
     width: 100%;
-    border: 1px solid #ccc;
+    border: 1px solid ${(props) => (props.invalid ? "red" : "#ccc")};
+    background: ${(props) => (props.invalid ? "#ffd7d7" : "transparent")};
     font: inherit;
     line-height: 1.5rem;
     padding: 0 0.25rem;
@@ -35,15 +41,6 @@ const FormControl = styled.div`
     outline: none;
     background: #fad0ec;
     border-color: #8b005d;
-  }
-
-  &.invalid input {
-    border-color: red;
-    background-color: #ffd7d7;
-  }
-
-  &.invalid label {
-    color: red;
   }
 `;
 
@@ -67,14 +64,12 @@ const CourseInput = (props) => {
     }
     props.onAddGoal(enteredValue);
   };
-  //<div className={`form-control ${!isValid ? "invalid" : ""}`}>
-  // replace div with formControl
-  // formControl styling is already included
-  // but we can add className to add invalid on condition
+
+  // we can pass props to use in the styling!!
 
   return (
     <form onSubmit={formSubmitHandler}>
-      <FormControl className={!isValid && "invalid"}>
+      <FormControl invalid={!isValid}>
         <label>Course Goal</label>
         <input type="text" onChange={goalInputChangeHandler} />
       </FormControl>

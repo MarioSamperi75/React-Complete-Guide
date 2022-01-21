@@ -1,15 +1,57 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 
 import Button from "../../UI/Button/Button";
 import "./CourseInput.css";
 
+// We will have a styled div
+// without affecting all the others div
+// solution: create a new component,
+// as a div but with a different name
+
+// from CSS to styled-components
+// remove the first .formControl selector and brackets
+// remove  the other .button from combined selectors and add & instead
+
+const FormControl = styled.div`
+  margin: 0.5rem 0;
+
+  & label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  & input {
+    display: block;
+    width: 100%;
+    border: 1px solid #ccc;
+    font: inherit;
+    line-height: 1.5rem;
+    padding: 0 0.25rem;
+  }
+
+  & input:focus {
+    outline: none;
+    background: #fad0ec;
+    border-color: #8b005d;
+  }
+
+  &.invalid input {
+    border-color: red;
+    background-color: #ffd7d7;
+  }
+
+  &.invalid label {
+    color: red;
+  }
+`;
+
 const CourseInput = (props) => {
   const [enteredValue, setEnteredValue] = useState("");
 
-  // a state checks if the input is not empty
   const [isValid, setIsValid] = useState(true);
 
-  //the trimmed lenght of the entered text modifies the value of isValid
   const goalInputChangeHandler = (event) => {
     if (event.target.value.trim().length !== 0) {
       setIsValid(true);
@@ -17,7 +59,6 @@ const CourseInput = (props) => {
     setEnteredValue(event.target.value);
   };
 
-  //the trimmed lenght of the entered text modifies the value of isValid
   const formSubmitHandler = (event) => {
     event.preventDefault();
     if (enteredValue.trim().length === 0) {
@@ -26,14 +67,17 @@ const CourseInput = (props) => {
     }
     props.onAddGoal(enteredValue);
   };
+  //<div className={`form-control ${!isValid ? "invalid" : ""}`}>
+  // replace div with formControl
+  // formControl styling is already included
+  // but we can add className to add invalid on condition
 
-  //ternary option to create dinamically the name of the class
   return (
     <form onSubmit={formSubmitHandler}>
-      <div className={`form-control ${!isValid ? "invalid" : ""}`}>
+      <FormControl className={!isValid && "invalid"}>
         <label>Course Goal</label>
         <input type="text" onChange={goalInputChangeHandler} />
-      </div>
+      </FormControl>
       <Button type="submit">Add Goal</Button>
     </form>
   );

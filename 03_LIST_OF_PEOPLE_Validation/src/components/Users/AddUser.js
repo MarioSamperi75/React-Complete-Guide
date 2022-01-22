@@ -20,6 +20,14 @@ const AddUser = (props) => {
   const addUserHandler = (event) => {
     //to prevent the reloading of the page on submit
     event.preventDefault();
+    //basic validation logic
+    if (enteredUsername.trim() === 0 || enteredAge.trim() === 0) {
+      return;
+    }
+    if (enteredAge < 1) {
+      return;
+    }
+
     console.log(enteredUsername, enteredAge);
     setEnteredUsername("");
     setEnteredAge("");

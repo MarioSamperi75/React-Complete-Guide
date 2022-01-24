@@ -9,6 +9,8 @@ import classes from "./AddUser.module.css";
 const AddUser = (props) => {
   const [enteredUsername, setEnteredUsername] = useState("");
   const [enteredAge, setEnteredAge] = useState("");
+  // we need false as default
+  const [error, setError] = useState();
 
   const usernameChangeHandler = (event) => {
     setEnteredUsername(event.target.value);
@@ -23,11 +25,17 @@ const AddUser = (props) => {
     event.preventDefault();
     //basic validation logic
     if (enteredUsername.trim().length === 0 || enteredAge.trim().length === 0) {
-      console.log("empty");
+      setError({
+        title: "Invalid input",
+        message: "Please enter a valid name and age (non-empty values)",
+      });
       return;
     }
     if (+enteredAge < 1) {
-      console.log("<1");
+      setError({
+        title: "Invalid input",
+        message: "Please enter a valid age (> 0)",
+      });
       return;
     }
 
@@ -40,10 +48,7 @@ const AddUser = (props) => {
   // Button is our Component, it has not default attributes
   return (
     <div>
-      <ErrorModal
-        title="En error occurred !"
-        message="Something went wrong !"
-      />
+      {error && <ErrorModal title={error.title} message={error.message} />}
       <Card className={classes.input}>
         <form onSubmit={addUserHandler}>
           <label htmlFor="username">Username</label>

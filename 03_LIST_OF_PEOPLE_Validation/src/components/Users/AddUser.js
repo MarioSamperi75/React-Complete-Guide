@@ -22,10 +22,12 @@ const AddUser = (props) => {
     //to prevent the reloading of the page on submit
     event.preventDefault();
     //basic validation logic
-    if (enteredUsername.trim() === 0 || enteredAge.trim() === 0) {
+    if (enteredUsername.trim().length === 0 || enteredAge.trim().length === 0) {
+      console.log("empty");
       return;
     }
-    if (enteredAge < 1) {
+    if (+enteredAge < 1) {
+      console.log("<1");
       return;
     }
 

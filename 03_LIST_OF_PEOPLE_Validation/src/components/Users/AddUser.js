@@ -44,11 +44,22 @@ const AddUser = (props) => {
     setEnteredAge("");
   };
 
+  // on click to div or button, to remove the modal
+  const errorHandler = () => {
+    setError(null);
+  };
+
   // type is actually a props that we create.
   // Button is our Component, it has not default attributes
   return (
     <div>
-      {error && <ErrorModal title={error.title} message={error.message} />}
+      {error && (
+        <ErrorModal
+          title={error.title}
+          message={error.message}
+          onConfirm={errorHandler}
+        />
+      )}
       <Card className={classes.input}>
         <form onSubmit={addUserHandler}>
           <label htmlFor="username">Username</label>

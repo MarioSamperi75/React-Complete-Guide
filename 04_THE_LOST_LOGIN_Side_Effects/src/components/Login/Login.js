@@ -1,12 +1,4 @@
-// we doesn't need to check user input for every keystroke (unnecessary work)
-// we could decide to check the input when user stop typing (500 ms)
-//this tecnique is called debouncing
-// we can implement that by useEffect !!
-
-// we need to set a cleanup for the timer for every new keystroke
-// for eventually stop the previous timer
-// useState can return something:
-// we will return the cleanup function
+// useEffect summary
 
 import React, { useState, useEffect } from "react";
 
@@ -21,35 +13,61 @@ const Login = (props) => {
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
-  //use effect run at the beginning and
-  //when at least one of the variables [dependencies] changes
+  //Without dependencies : it runs always
+  // when the component mounts and for every state update
+  useEffect(() => {
+    console.log("EFFECT RUNNING without dependencies");
+  });
+
+  //With an empty array :
+  // it runs just when the component mounts
+  useEffect(() => {
+    console.log("EFFECT RUNNING empty array");
+  }, []);
+
+  //enteredPassword as dependency :
+  // it runs when the component mounts and whenever password changes
+  useEffect(() => {
+    console.log("EFFECT RUNNING dependency=password ");
+  }, [enteredPassword]);
+
+  // not at the beginning!
+  // Cleanup - enteredPassword as dependency :
+  // it runs efter password changes when the previous input form is unmounted
+  // (before the new input form is mounted)
+  useEffect(() => {
+    return () => {
+      return console.log("CLEANUP - dep=password");
+    };
+  }, [enteredPassword]);
+
+  // Cleanup - empty array:
+  // not at the beginning!
+  // it runs efter password changes when the previous input form is unmounted
+  // (when we log in e.g.)
+  useEffect(() => {
+    return () => {
+      return console.log("CLEANUP - empty array");
+    };
+  }, []);
+
   useEffect(() => {
     const currentTimeout = setTimeout(() => {
-      console.log("Checking for validity");
       setFormIsValid(
         enteredEmail.includes("@") && enteredPassword.trim().length > 6
       );
     }, 500);
     return () => {
-      console.log("Cleanup");
       clearTimeout(currentTimeout);
     };
   }, [enteredEmail, enteredPassword]);
 
   const emailChangeHandler = (event) => {
     setEnteredEmail(event.target.value);
-
-    // setFormIsValid(
-    //   event.target.value.includes("@") && enteredPassword.trim().length > 6
-    // );
   };
 
   const passwordChangeHandler = (event) => {
     setEnteredPassword(event.target.value);
-
-    // setFormIsValid(
-    //   event.target.value.trim().length > 6 && enteredEmail.includes("@")
-    // );
   };
 
   const validateEmailHandler = () => {

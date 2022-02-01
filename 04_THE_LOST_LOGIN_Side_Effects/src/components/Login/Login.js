@@ -60,19 +60,20 @@ const Login = (props) => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   const identifier = setTimeout(() => {
-  //     console.log('Checking form validity!');
-  //     setFormIsValid(
-  //       enteredEmail.includes('@') && enteredPassword.trim().length > 6
-  //     );
-  //   }, 500);
+  // we can set a new  validity of the form
+  // whenever the validity of the passwordState or the emailState changes
+  // we adapt the use effect to the new reduced state
+  useEffect(() => {
+    const identifier = setTimeout(() => {
+      console.log("Checking form validity!");
+      setFormIsValid(emailState.isValid && passwordState.isValid);
+    }, 500);
 
-  //   return () => {
-  //     console.log('CLEANUP');
-  //     clearTimeout(identifier);
-  //   };
-  // }, [enteredEmail, enteredPassword]);
+    return () => {
+      console.log("CLEANUP");
+      clearTimeout(identifier);
+    };
+  }, [emailState.isValid, passwordState.isValid]);
 
   // we manage events by delegating to our reducer
   // we have just to create an action {the object} as argument of the useReducer function
@@ -80,14 +81,15 @@ const Login = (props) => {
   const emailChangeHandler = (event) => {
     dispatchEmail({ type: "USER_INPUT", val: event.target.value });
 
-    setFormIsValid(event.target.value.includes("@") && passwordState.isValid);
+    // we use useEffect to set the validity
+    // setFormIsValid(event.target.value.includes("@") && passwordState.isValid);
   };
 
   const passwordChangeHandler = (event) => {
     dispatchPassword({ type: "USER_INPUT", val: event.target.value });
 
-    //we use the new object state
-    setFormIsValid(emailState.isValid && event.target.value.trim().length > 6);
+    // we use useEffect to set the validity
+    //setFormIsValid(emailState.isValid && event.target.value.trim().length > 6);
   };
 
   //we manage events by delegating to our reducer

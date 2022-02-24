@@ -3,13 +3,15 @@
 // 2) declare the variable and assign the specific context
 // 3) use it your variable (ctx) where you want!
 
+//  we initited the context provider with isLoggedIn and onLogout
+
 // 1)
 import React, { useContext } from "react";
 import AuthContext from "../../store/auth-context";
 
 import classes from "./Navigation.module.css";
 
-const Navigation = (props) => {
+const Navigation = () => {
   //2)
   const ctx = useContext(AuthContext);
   //3)
@@ -28,7 +30,7 @@ const Navigation = (props) => {
         )}
         {ctx.isLoggedIn && (
           <li>
-            <button onClick={props.onLogout}>Logout</button>
+            <button onClick={ctx.onLogout}>Logout</button>
           </li>
         )}
       </ul>

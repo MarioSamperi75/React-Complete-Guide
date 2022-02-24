@@ -34,11 +34,15 @@ function App() {
     setIsLoggedIn(false);
   };
 
-  // we have to set the  value dinamically by using state isLoggedIn
-  //and remove  props isAuthenticated
+  // we can also pass a function by the context (onLogout)
   return (
-    <AuthContext.Provider value={{ isLoggedIn: isLoggedIn }}>
-      <MainHeader onLogout={logoutHandler} />
+    <AuthContext.Provider
+      value={{
+        isLoggedIn: isLoggedIn,
+        onLogout: logoutHandler,
+      }}
+    >
+      <MainHeader />
       <main>
         {!isLoggedIn && <Login onLogin={loginHandler} />}
         {isLoggedIn && <Home onLogout={logoutHandler} />}

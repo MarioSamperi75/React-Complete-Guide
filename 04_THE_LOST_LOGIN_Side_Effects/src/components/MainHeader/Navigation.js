@@ -1,41 +1,38 @@
-// a way to consume the context is wrapping the jsx code thet will use it
-// in a <AuthContext.Consumer> and create a function that has the context as argument
-// and that returns the jsx code
+// an easier way to consume then context : useContext hook!
+// 1) import useContext
+// 2) declare the variable and assign the specific context
+// 3) use it your variable (ctx) where you want!
 
-// we can everywere use the context argument (ctx) instead of props
-
-import React from "react";
+// 1)
+import React, { useContext } from "react";
 import AuthContext from "../../store/auth-context";
 
 import classes from "./Navigation.module.css";
 
 const Navigation = (props) => {
+  //2)
+  const ctx = useContext(AuthContext);
+  //3)
   return (
-    <AuthContext.Consumer>
-      {(ctx) => {
-        return (
-          <nav className={classes.nav}>
-            <ul>
-              {ctx.isLoggedIn && (
-                <li>
-                  <a href="/">Users</a>
-                </li>
-              )}
-              {ctx.isLoggedIn && (
-                <li>
-                  <a href="/">Admin</a>
-                </li>
-              )}
-              {ctx.isLoggedIn && (
-                <li>
-                  <button onClick={props.onLogout}>Logout</button>
-                </li>
-              )}
-            </ul>
-          </nav>
-        );
-      }}
-    </AuthContext.Consumer>
+    <nav className={classes.nav}>
+      <ul>
+        {ctx.isLoggedIn && (
+          <li>
+            <a href="/">Users</a>
+          </li>
+        )}
+        {ctx.isLoggedIn && (
+          <li>
+            <a href="/">Admin</a>
+          </li>
+        )}
+        {ctx.isLoggedIn && (
+          <li>
+            <button onClick={props.onLogout}>Logout</button>
+          </li>
+        )}
+      </ul>
+    </nav>
   );
 };
 

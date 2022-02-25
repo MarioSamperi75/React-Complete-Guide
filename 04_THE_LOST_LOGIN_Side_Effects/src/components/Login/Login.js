@@ -5,7 +5,13 @@
 // the reducer function will create a new object as state
 // use the new object in your code
 
-import React, { useState, useEffect, useReducer, useContext } from "react";
+import React, {
+  useState,
+  useEffect,
+  useReducer,
+  useContext,
+  useRef,
+} from "react";
 
 import Card from "../UI/Card/Card";
 import classes from "./Login.module.css";
@@ -51,6 +57,9 @@ const Login = (props) => {
   });
 
   const authCtx = useContext(AuthContext);
+
+  const emailInputRef = useRef();
+  const passwordInputRef = useRef();
 
   // object destructuring with alias!
   const { isValid: emailIsValid } = emailState;
@@ -102,9 +111,18 @@ const Login = (props) => {
     dispatchPassword({ type: "INPUT_BLUR" });
   };
 
+  // if form is no valid, let's focus the input form that has invalid imput (email or password)
+  // to focus it we use create a ref in the email and password input, and calls the focus function
+  // that we get from input (se Input.js comments:)
   const submitHandler = (event) => {
     event.preventDefault();
-    authCtx.onLogin(emailState.value, passwordState.value);
+    if (formIsValid) {
+      authCtx.onLogin(emailState.value, passwordState.value);
+    } else if (!emailIsValid) {
+      emailInputRef.current.focus();
+    } else {
+      passwordInputRef.current.focus();
+    }
   };
 
   // we otsourced the imuts elements to a reusable input component
@@ -114,6 +132,7 @@ const Login = (props) => {
     <Card className={classes.login}>
       <form onSubmit={submitHandler}>
         <Input
+          ref={emailInputRef}
           id="email"
           label="E-Mail"
           type="email"
@@ -124,6 +143,7 @@ const Login = (props) => {
         />
 
         <Input
+          ref={passwordInputRef}
           id="password"
           label="Password"
           type="password"
@@ -134,7 +154,7 @@ const Login = (props) => {
         />
 
         <div className={classes.actions}>
-          <Button type="submit" className={classes.btn} disabled={!formIsValid}>
+          <Button type="submit" className={classes.btn}>
             Login
           </Button>
         </div>

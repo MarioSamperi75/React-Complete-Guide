@@ -1,4 +1,5 @@
 import classes from "./AvailableMeals.module.css";
+import Card from "../UI/Card";
 
 // we doesn't get things from db,
 // we hav just some dummy data
@@ -39,7 +40,9 @@ const AvailableMeals = (props) => {
 
   return (
     <section className={classes.meals}>
-      <ul>{mealsList}</ul>
+      <Card>
+        <ul>{mealsList}</ul>
+      </Card>
     </section>
   );
 };

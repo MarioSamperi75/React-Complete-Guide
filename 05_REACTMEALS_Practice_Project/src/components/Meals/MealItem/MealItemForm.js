@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 import Input from "../../UI/Input";
 import classes from "./MealItemForm.module.css";
@@ -10,17 +10,35 @@ const MealItemForm = (props) => {
   // so we have to forward ref from input.js
   const amountInputRef = useRef();
 
+  const [amountIsValid, setAmountIsValid] = useState(true);
+
   const submitHandler = (event) => {
     event.preventDefault();
 
     const enteredAmount = amountInputRef.current.value;
     const enteredAmountNumber = +enteredAmount;
 
+    //Validation
+    // we create a state (amountIsValid), we change it in the validation
+    // and we render a msg error conditionally
+    if (
+      enteredAmount.trim().length === 0 ||
+      enteredAmountNumber < 1 ||
+      enteredAmountNumber > 5
+    ) {
+      setAmountIsValid(false);
+      return;
+    } else {
+      setAmountIsValid(true);
+      props.onAddToCart(enteredAmountNumber);
+    }
+
     // pass the enteredAmount value from child to parent
     // we will manage AddItem in  MealItem.js
     // because we needs more properties to add the Item
     props.onAddToCart(enteredAmountNumber);
   };
+  // Add noValidate property form on order to try the extra validation
   return (
     <form className={classes.form} onSubmit={submitHandler}>
       <Input
@@ -36,6 +54,7 @@ const MealItemForm = (props) => {
         }}
       />
       <button>Add</button>
+      {!amountIsValid && <p>Please enter a valid amount (1-5).</p>}
     </form>
   );
 };

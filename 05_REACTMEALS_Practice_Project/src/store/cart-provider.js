@@ -14,7 +14,7 @@ const cartReducer = (state, action) => {
     // action is all we get to update the state, state is the previous values of the state
     const updatedItems = state.items.concat(action.item);
     const updatedTotalAmount =
-      state.totalAmount + action.item.price + action.item.amount;
+      state.totalAmount + action.item.price * action.item.amount;
 
     return {
       items: updatedItems,

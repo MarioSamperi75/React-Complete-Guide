@@ -30,13 +30,11 @@ const MealItemForm = (props) => {
       return;
     } else {
       setAmountIsValid(true);
+      // pass the enteredAmount value from child to parent
+      // we will manage AddItem in  MealItem.js
+      // because we needs more properties to add the Item
       props.onAddToCart(enteredAmountNumber);
     }
-
-    // pass the enteredAmount value from child to parent
-    // we will manage AddItem in  MealItem.js
-    // because we needs more properties to add the Item
-    props.onAddToCart(enteredAmountNumber);
   };
   // Add noValidate property form on order to try the extra validation
   return (

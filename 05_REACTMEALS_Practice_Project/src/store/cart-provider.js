@@ -12,7 +12,7 @@ const cartReducer = (state, action) => {
     // we use concate instead of push to update the state in an immutable way
     // (not updating the same state actually, so the existing data in memory, but creating a new state)
     // action is all we get to update the state, state is the previous values of the state
-    const updatedItems = state.items.concate(action.item);
+    const updatedItems = state.items.concat(action.item);
     const updatedTotalAmount =
       state.totalAmount + action.item.price + action.item.amount;
 

@@ -9,12 +9,33 @@ const defaultCartState = {
 
 const cartReducer = (state, action) => {
   if (action.type === "ADD") {
-    // we use concate instead of push to update the state in an immutable way
-    // (not updating the same state actually, so the existing data in memory, but creating a new state)
-    // action is all we get to update the state, state is the previous values of the state
-    const updatedItems = state.items.concat(action.item);
+    //that's always the same
     const updatedTotalAmount =
       state.totalAmount + action.item.price * action.item.amount;
+
+    const existingCartItemIndex = state.items.findIndex(
+      (item) => item.id === action.item.id
+    );
+    // this value is null if the item doesn't exist in the cart
+    const existingCartItem = state.items[existingCartItemIndex];
+
+    let updatedItem;
+    let updatedItems;
+
+    // we have to verify if the item exists in the cart
+    // if the item exists we change just the amount
+    // and we overwrite it in the array of items
+    // else, if the item does not exists, we just add it to the array
+    if (existingCartItem) {
+      updatedItem = {
+        ...existingCartItem,
+        amount: existingCartItem.amount + action.item.amount,
+      };
+      updatedItems = [...state.items];
+      updatedItems[existingCartItemIndex] = updatedItem;
+    } else {
+      updatedItems = state.items.concat(action.item);
+    }
 
     return {
       items: updatedItems,

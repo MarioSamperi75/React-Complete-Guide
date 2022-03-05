@@ -43,8 +43,37 @@ const cartReducer = (state, action) => {
     };
   }
 
+  //almost the same logic as "ADD". See it!
   if (action.type === "REMOVE") {
+    const existingCartItemIndex = state.items.findIndex(
+      //remember we send just id and not item in this case
+      (item) => item.id === action.id
+    );
+    const existingCartItem = state.items[existingCartItemIndex];
+    const updatedTotalAmount = state.totalAmount - existingCartItem.price;
+    let updatedItems;
+    let updatedItem;
+
+    // if the amount is 1 then the item must disappear (we can use filter)
+    // else just amount minus 1
+    if (existingCartItem.amount === 1) {
+      //remember we send just id and not item in this case
+      updatedItems = state.items.filter((item) => item.id !== action.id);
+    } else {
+      updatedItem = {
+        ...existingCartItem,
+        amount: existingCartItem.amount - 1,
+      };
+      updatedItems = [...state.items];
+      updatedItems[existingCartItemIndex] = updatedItem;
+    }
+
+    return {
+      items: updatedItems,
+      totalAmount: updatedTotalAmount,
+    };
   }
+
   return defaultCartState;
 };
 

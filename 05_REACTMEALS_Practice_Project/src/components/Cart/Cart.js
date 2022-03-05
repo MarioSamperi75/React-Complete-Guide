@@ -13,9 +13,13 @@ const Cart = (props) => {
   // we added a CartItem component and set in the list
   // we need also two functoins to edit the quantity from the cart
 
-  const cartItemAddHandler = (item) => {};
+  const cartItemAddHandler = (item) => {
+    cartCtx.addItem({ ...item, amount: 1 });
+  };
 
-  const cartItemRemoveHandler = (id) => {};
+  const cartItemRemoveHandler = (id) => {
+    cartCtx.removeItem(id);
+  };
 
   // we delete the dummy array and we add context to show the items in the cart
   // and we change the hardcoded values with real values in the rendered view

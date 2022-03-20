@@ -18,6 +18,7 @@ class UserFinder extends Component {
   }
 
   // like useEffect with dependencies
+  // filter the list just when updating the search term
   componentDidUpdate(prevProps, prevState) {
     // we use if to avoid an infinite loop
     if (prevState.searchTerm !== this.state.searchTerm) {

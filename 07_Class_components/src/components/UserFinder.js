@@ -17,6 +17,13 @@ class UserFinder extends Component {
     };
   }
 
+  // you run that just once at the beginning
+  // like an use effect with empty dependencies (that never changes...)
+  componentDidMount() {
+    //Often when you send http request,
+    this.setState({ filteredUsers: DUMMY_USERS });
+  }
+
   // like useEffect with dependencies
   // filter the list just when updating the search term
   componentDidUpdate(prevProps, prevState) {

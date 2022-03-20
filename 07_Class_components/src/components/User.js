@@ -9,6 +9,11 @@ import classes from "./User.module.css";
 // };
 
 class User extends Component {
+  // like a cleaning function in useEffect
+  componentWillUnmount() {
+    console.log("User will unmount");
+  }
+
   render() {
     return <li className={classes.user}>{this.props.name}</li>;
   }

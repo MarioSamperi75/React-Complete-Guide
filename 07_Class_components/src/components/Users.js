@@ -15,6 +15,16 @@ class Users extends Component {
       // arrayState: [array]
     };
   }
+
+  // if an error is generated inside a user component (JSX)
+  // we can't use try catch, but we have to build and use an error boundary
+  // error boundary must be a class component
+  componentDidUpdate() {
+    if (this.props.users.length === 0) {
+      throw new Error("No users provided!");
+    }
+  }
+
   toggleUsersHandler() {
     // this.state.showUsers = false; NEVER!!!
     // use function setState!

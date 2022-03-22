@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import MoviesList from "./components/MoviesList";
 import "./App.css";
@@ -7,19 +7,19 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
-
-  //  we use the function fetch, that gets a promise
-  //  we get a Json object that we transform to a js object by using json()
-  //  and then we update a state containing the array of moovies
-  //  transformedMovies: we have also to adapt the json field names
-  //  so that they match the names we have in our components
+  // we are using useEffect because
+  // we want to fetch data at the very start
+  // or if there is some change in fetchMoviesHandler
+  // the problem is that every function is generated every time
+  // solution: we wrap the entire fetchMoviesHandler with a useCallback
+  // and we add empty array dependencies
 
   //  async/await  structure
-  const fetchMoviesHandler = async () => {
+  const fetchMoviesHandler = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch("https://swapi.dev/api/film/");
+      const response = await fetch("https://swapi.dev/api/films/");
       // fetch doesn't generate an error for a 400 or 500 response
       // we have to generate it
       if (!response.ok) {
@@ -42,7 +42,11 @@ function App() {
       setError(error.message);
     }
     setIsLoading(false);
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchMoviesHandler();
+  }, [fetchMoviesHandler]);
 
   let content = <p>Movies not found.</p>;
 

@@ -1,0 +1,2 @@
+useCounter = () => {};
+export default useCounter;

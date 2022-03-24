@@ -16,6 +16,13 @@ const SimpleInput = (props) => {
 
     const enteredValue = nameInputRef.current.value;
     console.log(enteredValue);
+
+    // reset the input form
+
+    // using state
+    setEnteredName("");
+    // using ref
+    //nameInputRef.current.value = ''; // not ideal, don't manipulate the DOM!
   };
 
   return (
@@ -27,6 +34,7 @@ const SimpleInput = (props) => {
           type="text"
           id="name"
           onChange={nameInputChangeHandler}
+          value={enteredName}
         />
       </div>
       <div className="form-actions">

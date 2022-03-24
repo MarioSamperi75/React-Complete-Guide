@@ -1,36 +1,43 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
-const useHttp = (requestConfig, applyData) => {
+const useHttp = (applyData) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const sendRequest = async (taskText) => {
-    setIsLoading(true);
-    setError(null);
-    // we check if there is method, headers, and body
-    // it happens only in the case of post requests
-    try {
-      const response = await fetch(requestConfig.url, {
-        method: requestConfig.method ? requestConfig.method : "GET",
-        headers: requestConfig.headers ? requestConfig.headers : {},
-        body: requestConfig.body ? JSON.stringify(requestConfig.body) : null,
-      });
+  // useCallback to avoid the sendRequest(fetchTasks) regeneration
+  // but requestConfig and applyData are functions
+  // we can move the first one as argument in sendRequest(-> not external anymore!)
+  // and we manage (useCallback) the second one in app.js
+  const sendRequest = useCallback(
+    async (requestConfig) => {
+      setIsLoading(true);
+      setError(null);
+      // we check if there is method, headers, and body
+      // it happens only in the case of post requests
+      try {
+        const response = await fetch(requestConfig.url, {
+          method: requestConfig.method ? requestConfig.method : "GET",
+          headers: requestConfig.headers ? requestConfig.headers : {},
+          body: requestConfig.body ? JSON.stringify(requestConfig.body) : null,
+        });
 
-      if (!response.ok) {
-        throw new Error("Request failed!");
+        if (!response.ok) {
+          throw new Error("Request failed!");
+        }
+
+        const data = await response.json();
+
+        // fuction that we get as argument
+        // the trasformation of the data is different in get or post requests
+        // we delegate the trasformation function to the component that uses this hook
+        applyData(data);
+      } catch (err) {
+        setError(err.message || "Something went wrong!");
       }
-
-      const data = await response.json();
-
-      // fuction that we get as argument
-      // the trasformation of the data is different in get or post requests
-      // we delegate the trasformation function to the component that uses this hook
-      applyData(data);
-    } catch (err) {
-      setError(err.message || "Something went wrong!");
-    }
-    setIsLoading(false);
-  };
+      setIsLoading(false);
+    },
+    [applyData]
+  );
   // this syntax is the same as isLoading: isLoading, ... and so on
   return {
     isLoading,

@@ -5,13 +5,19 @@ const SimpleInput = (props) => {
   // we manage enterNameIsValide some a normal variable and we derive it from enteredName
   // we don't really need two states
   // so we can delete all the corresponding setState- Cleaner code!
-
-  //const [enteredNameIsValid, setEnteredNameIsValid] = useState(false);
   const [enteredNameTouched, setEnteredNameTouched] = useState(false);
 
   const enteredNameIsValid = enteredName.trim() !== "";
   // we will check INvalid to render conditionallu components and style
   const enteredNameIsInvalid = !enteredNameIsValid && enteredNameTouched;
+  // we can check the validity of the overall form in case there is many inputs fields
+  // now we can for example disable the button in !formIsValid
+  let formIsValid = false;
+
+  // in case we are many inputs we just use && (&& enteredAgeIsValid...)
+  if (enteredNameIsValid) {
+    formIsValid = true;
+  }
 
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
@@ -56,7 +62,7 @@ const SimpleInput = (props) => {
         )}
       </div>
       <div className="form-actions">
-        <button>Submit</button>
+        <button disabled={!formIsValid}>Submit</button>
       </div>
     </form>
   );

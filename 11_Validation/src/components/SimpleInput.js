@@ -16,6 +16,16 @@ const SimpleInput = (props) => {
     setEnteredName(event.target.value);
   };
 
+  // we introduce a validation when the input lose the focus (blur)
+  const nameInputBlurHandler = (event) => {
+    setEnteredNameTouched(true);
+
+    if (enteredName.trim() === "") {
+      setEnteredNameIsValid(false);
+      return;
+    }
+  };
+
   const formSubmissionHandler = (event) => {
     event.preventDefault();
     setEnteredNameTouched(true);
@@ -53,6 +63,7 @@ const SimpleInput = (props) => {
           type="text"
           id="name"
           onChange={nameInputChangeHandler}
+          onBlur={nameInputBlurHandler}
           value={enteredName}
         />
         {enteredNameIsInvalid && (

@@ -2,7 +2,13 @@ import { useRef, useState } from "react";
 
 const SimpleInput = (props) => {
   const [enteredName, setEnteredName] = useState("");
-  const [enterdNameIsValid, setEnteredNameIsValid] = useState(true);
+  // we set enterNameIsValid as true as default to avoid to see the error message at the beginning
+  // but it's not optimal, and it's not... true!
+  // we can have strange behaviors if you are using the state for other things
+  // so we set it false as default and introduce an additional state
+  // touched + !valid  => error message
+  const [enteredNameIsValid, setEnteredNameIsValid] = useState(false);
+  const [enteredNameTouched, setEnteredNameTouched] = useState(false);
 
   const nameInputRef = useRef();
 
@@ -12,6 +18,7 @@ const SimpleInput = (props) => {
 
   const formSubmissionHandler = (event) => {
     event.preventDefault();
+    setEnteredNameTouched(true);
 
     // browser validation setting state for conditional render
     if (enteredName.trim() === "") {
@@ -25,18 +32,17 @@ const SimpleInput = (props) => {
     const enteredValue = nameInputRef.current.value;
     console.log(enteredValue);
 
-    // reset the input form
-
-    // using state
     setEnteredName("");
-    // using ref
     //nameInputRef.current.value = ''; // not ideal, don't manipulate the DOM!
   };
 
+  // we will check INvalid (touched + !valid)
+  const enteredNameIsInvalid = !enteredNameIsValid && enteredNameTouched;
+
   // setting the name of the class dinamically
-  const nameInputClass = enterdNameIsValid
-    ? "form-control"
-    : "form-control invalid";
+  const nameInputClass = enteredNameIsInvalid
+    ? "form-control invalid"
+    : "form-control";
 
   return (
     <form onSubmit={formSubmissionHandler}>
@@ -49,7 +55,7 @@ const SimpleInput = (props) => {
           onChange={nameInputChangeHandler}
           value={enteredName}
         />
-        {!enterdNameIsValid && (
+        {enteredNameIsInvalid && (
           <p className="error-text">No empty input, please!</p>
         )}
       </div>

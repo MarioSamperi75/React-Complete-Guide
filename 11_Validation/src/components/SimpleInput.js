@@ -1,56 +1,39 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 const SimpleInput = (props) => {
   const [enteredName, setEnteredName] = useState("");
-  // we set enterNameIsValid as true as default to avoid to see the error message at the beginning
-  // but it's not optimal, and it's not... true!
-  // we can have strange behaviors if you are using the state for other things
-  // so we set it false as default and introduce an additional state
-  // touched + !valid  => error message
-  const [enteredNameIsValid, setEnteredNameIsValid] = useState(false);
+  // we manage enterNameIsValide some a normal variable and we derive it from enteredName
+  // we don't really need two states
+  // so we can delete all the corresponding setState- Cleaner code!
+
+  //const [enteredNameIsValid, setEnteredNameIsValid] = useState(false);
   const [enteredNameTouched, setEnteredNameTouched] = useState(false);
 
-  const nameInputRef = useRef();
+  const enteredNameIsValid = enteredName.trim() !== "";
+  // we will check INvalid to render conditionallu components and style
+  const enteredNameIsInvalid = !enteredNameIsValid && enteredNameTouched;
 
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
-
-    if (event.target.value.trim() !== "") {
-      setEnteredNameIsValid(true);
-    }
   };
-
   // we introduce a validation when the input lose the focus (blur)
   const nameInputBlurHandler = (event) => {
     setEnteredNameTouched(true);
-
-    if (enteredName.trim() === "") {
-      setEnteredNameIsValid(false);
-    }
   };
 
   const formSubmissionHandler = (event) => {
     event.preventDefault();
     setEnteredNameTouched(true);
 
-    // browser validation setting state for conditional render
-    if (enteredName.trim() === "") {
-      setEnteredNameIsValid(false);
+    if (!enteredNameIsValid) {
       return;
     }
-
-    setEnteredNameIsValid(true);
     console.log(enteredName);
 
-    const enteredValue = nameInputRef.current.value;
-    console.log(enteredValue);
-
+    //resetting logic
     setEnteredName("");
-    //nameInputRef.current.value = ''; // not ideal, don't manipulate the DOM!
+    setEnteredNameTouched(false);
   };
-
-  // we will check INvalid (touched + !valid)
-  const enteredNameIsInvalid = !enteredNameIsValid && enteredNameTouched;
 
   // setting the name of the class dinamically
   const nameInputClass = enteredNameIsInvalid
@@ -62,7 +45,6 @@ const SimpleInput = (props) => {
       <div className={nameInputClass}>
         <label htmlFor="name">Your Name</label>
         <input
-          ref={nameInputRef}
           type="text"
           id="name"
           onChange={nameInputChangeHandler}

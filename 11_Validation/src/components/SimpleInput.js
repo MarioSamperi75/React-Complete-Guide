@@ -14,6 +14,10 @@ const SimpleInput = (props) => {
 
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
+
+    if (event.target.value.trim() !== "") {
+      setEnteredNameIsValid(true);
+    }
   };
 
   // we introduce a validation when the input lose the focus (blur)
@@ -22,7 +26,6 @@ const SimpleInput = (props) => {
 
     if (enteredName.trim() === "") {
       setEnteredNameIsValid(false);
-      return;
     }
   };
 

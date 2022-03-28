@@ -7,6 +7,9 @@ import { useEffect, useState } from "react";
 // we do it in a variable (mealsList)
 const AvailableMeals = (props) => {
   const [meals, setMeals] = useState([]);
+  // we load the database items when we render the first time
+  // we can set it true as default
+  const [isLoading, setIsloading] = useState(true);
 
   // we load data  from firebase as side effect
   // useEffect function can't return a promise, but can contain a function that returns a promise
@@ -32,10 +35,18 @@ const AvailableMeals = (props) => {
       }
       // we save the array as state
       setMeals(loadedMeals);
+      setIsloading(false);
     };
     fetchMeals();
   }, []);
 
+  if (isLoading) {
+    return (
+      <section className={classes.loadingMealsMsg}>
+        <p>Loading...</p>
+      </section>
+    );
+  }
   //we go through the new meals array (the state)
   const mealsList = meals.map((meal) => {
     return (

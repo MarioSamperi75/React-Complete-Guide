@@ -10,6 +10,7 @@ const AvailableMeals = (props) => {
   // we load the database items when we render the first time
   // we can set it true as default
   const [isLoading, setIsloading] = useState(true);
+  const [httpError, setHttpError] = useState();
 
   // we load data  from firebase as side effect
   // useEffect function can't return a promise, but can contain a function that returns a promise
@@ -17,8 +18,16 @@ const AvailableMeals = (props) => {
   useEffect(() => {
     const fetchMeals = async () => {
       const response = await fetch(
-        "https://react-http-7b575-default-rtdb.europe-west1.firebasedatabase.app/meals.json"
+        // we deleted .json to create an error
+        "https://react-http-7b575-default-rtdb.europe-west1.firebasedatabase.app/meals"
       );
+
+      // we get a response anyway, not an error
+      // we havve tro generate it
+      if (!response.ok) {
+        throw new Error("Something went wrong!");
+      }
+
       // we convert to jsobject
       const responseData = await response.json();
 
@@ -37,7 +46,11 @@ const AvailableMeals = (props) => {
       setMeals(loadedMeals);
       setIsloading(false);
     };
-    fetchMeals();
+    //we catch the error, reset is Loading and save the error msg in the state
+    fetchMeals().catch((error) => {
+      setIsloading(false);
+      setHttpError(error.message);
+    });
   }, []);
 
   if (isLoading) {
@@ -47,6 +60,15 @@ const AvailableMeals = (props) => {
       </section>
     );
   }
+
+  if (httpError) {
+    return (
+      <section className={classes.loadingMealsErrorMsg}>
+        <p>{httpError}</p>
+      </section>
+    );
+  }
+
   //we go through the new meals array (the state)
   const mealsList = meals.map((meal) => {
     return (

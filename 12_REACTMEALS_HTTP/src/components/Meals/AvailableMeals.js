@@ -18,8 +18,7 @@ const AvailableMeals = (props) => {
   useEffect(() => {
     const fetchMeals = async () => {
       const response = await fetch(
-        // we deleted .json to create an error
-        "https://react-http-7b575-default-rtdb.europe-west1.firebasedatabase.app/meals"
+        "https://react-http-7b575-default-rtdb.europe-west1.firebasedatabase.app/meals.json"
       );
 
       // we get a response anyway, not an error

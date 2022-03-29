@@ -74,6 +74,13 @@ const cartReducer = (state, action) => {
     };
   }
 
+  // we add a new action 'CLEAR'
+  // the default cart state is an empty array
+  // we could avoid actually to explicit this action...
+  if (action.type === "CLEAR") {
+    return defaultCartState;
+  }
+
   return defaultCartState;
 };
 
@@ -89,11 +96,20 @@ const CartProvider = (props) => {
     dispatchCartAction({ type: "REMOVE", id: id });
   };
 
+  // a new clear function
+  // we add it also in the cart context (better auto-completion)
+  // and down there in the concrete default values
+  // now we have just to use the context in cart.js when submitting
+  const clearCartHandler = () => {
+    dispatchCartAction({ type: "CLEAR" });
+  };
+
   const cartContext = {
     items: cartState.items,
     totalAmount: cartState.totalAmount,
     addItem: addItemToCartHandler,
     removeItem: removeItemFromCartHandler,
+    clearCart: clearCartHandler,
   };
 
   return (

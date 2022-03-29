@@ -52,6 +52,7 @@ const Cart = (props) => {
     );
     setIsSubmitting(false);
     setDidSubmit(true);
+    cartCtx.clearCart();
   };
 
   // bind preconfigure the function for future executions and preconfigures the arguments too

@@ -5,9 +5,9 @@ import classes from "./Checkout.module.css";
 // in Card this action is associated with closing the form
 const Checkout = (props) => {
   return (
-    <form>
+    <form className={classes.form}>
       <div className={classes.control}>
-        <label htmlFor="">Your Name</label>
+        <label htmlFor="name">Your Name</label>
         <input type="text" id="name" />
       </div>
       <div className={classes.control}>
@@ -22,10 +22,12 @@ const Checkout = (props) => {
         <label htmlFor="city">City</label>
         <input type="text" id="city" />
       </div>
-      <button type="button" onClick={props.onCancel}>
-        Cancel
-      </button>
-      <button>Confirm</button>
+      <div className={classes.actions}>
+        <button type="button" onClick={props.onCancel}>
+          Cancel
+        </button>
+        <button className={classes.submit}>Confirm</button>
+      </div>
     </form>
   );
 };

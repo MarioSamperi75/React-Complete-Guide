@@ -1,5 +1,8 @@
 import classes from "./Checkout.module.css";
 
+// we add a new cancel button, type 'button' to not submit
+// we receive a props on cancle from Card
+// in Card this action is associated with closing the form
 const Checkout = (props) => {
   return (
     <form>
@@ -19,6 +22,9 @@ const Checkout = (props) => {
         <label htmlFor="city">City</label>
         <input type="text" id="city" />
       </div>
+      <button type="button" onClick={props.onCancel}>
+        Cancel
+      </button>
       <button>Confirm</button>
     </form>
   );

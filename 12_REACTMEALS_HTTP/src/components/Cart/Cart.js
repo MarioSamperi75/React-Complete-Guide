@@ -32,6 +32,20 @@ const Cart = (props) => {
   // we show also the order button just if there's something in the cart
   const hasItems = cartCtx.items.length > 0;
 
+  // we get the user data from the child and we send a post request with a new orders object
+  const submitOrdersHandler = (userData) => {
+    fetch(
+      "https://react-http-7b575-default-rtdb.europe-west1.firebasedatabase.app/orders.json",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          user: userData,
+          orderedItems: cartCtx.items,
+        }),
+      }
+    );
+  };
+
   // bind preconfigure the function for future executions and preconfigures the arguments too
   // to ensure that the functions receive the arguments
   const cartItems = (
@@ -71,7 +85,9 @@ const Cart = (props) => {
         <span>Total Amount</span>
         <span>{totalAmount}</span>
       </div>
-      {isCheckout && <Checkout onCancel={props.onClose} />}
+      {isCheckout && (
+        <Checkout onConfirm={submitOrdersHandler} onCancel={props.onClose} />
+      )}
       {!isCheckout && modalAction}
     </Modal>
   );

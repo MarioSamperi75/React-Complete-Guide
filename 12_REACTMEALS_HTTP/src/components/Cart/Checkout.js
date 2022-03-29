@@ -51,9 +51,16 @@ const Checkout = (props) => {
     if (!formIsValid) {
       return;
     }
-  };
 
-  // submit cart data, not reacheble if !formIsValid
+    // submit cart data, not reacheble if !formIsValid
+    // we handle that in the cart component
+    props.onConfirm({
+      name: enteredName,
+      street: enteredStreet,
+      postalCode: enteredPostal,
+      city: enteredCity,
+    });
+  };
 
   const nameControlClasses = `${classes.control} ${
     formInputsValidity.name ? "" : classes.invalid

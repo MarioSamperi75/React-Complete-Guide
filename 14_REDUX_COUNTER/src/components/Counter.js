@@ -10,83 +10,43 @@
 // 2) assign it to a variable (you will get the dispatch method)
 // 3) Use the dispatch method where you need and provide the action you want
 
-// import React from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import classes from "./Counter.module.css";
-
-// const Counter = () => {
-//   const dispatch = useDispatch();
-//   const counter = useSelector((state) => state.counter);
-
-//   const incrementHandler = () => {
-//     dispatch({ type: "increment" });
-//   };
-
-//   const decrementHandler = () => {
-//     dispatch({ type: "decrement" });
-//   };
-
-//   const toggleCounterHandler = () => {};
-
-//   return (
-//     <main className={classes.counter}>
-//       <h1>Redux Counter</h1>
-//       <div className={classes.value}>{counter}</div>
-//       <div>
-//         <button onClick={incrementHandler}>Increment</button>
-//         <button onClick={decrementHandler}>Decrement</button>
-//       </div>
-//       <button onClick={toggleCounterHandler}>Toggle Counter</button>
-//     </main>
-//   );
-// };
-//
-// export default Counter;
-
-//REDUX IN A CLASS COMPONENT
-
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import classes from "./Counter.module.css";
 
-class Counter extends Component {
-  incrementHandler() {
-    this.props.increment();
-  }
-  decrementHandler() {
-    this.props.decrement();
-  }
-  toggleCounterHandler() {}
+const Counter = () => {
+  const dispatch = useDispatch();
+  const counter = useSelector((state) => state.counter);
 
-  render() {
-    return (
-      <main className={classes.counter}>
-        <h1>Redux Counter</h1>
-        <div className={classes.value}>{this.props.counter}</div>
-        <div>
-          <button onClick={this.incrementHandler.bind(this)}>Increment</button>
-          <button onClick={this.decrementHandler.bind(this)}>Decrement</button>
-        </div>
-        <button onClick={this.toggleCounterHandler}>Toggle Counter</button>
-      </main>
-    );
-  }
-}
-
-const mapStateToProps = (state) => {
-  return {
-    counter: state.counter,
+  const incrementHandler = () => {
+    dispatch({ type: "increment" });
   };
+
+  // you can pass data to the reducer as a payload
+  // you will get it as action
+  // of course no need to hardcode the amount...
+  const increaseHandler = () => {
+    dispatch({ type: "increase", amount: 5 });
+  };
+
+  const decrementHandler = () => {
+    dispatch({ type: "decrement" });
+  };
+
+  const toggleCounterHandler = () => {};
+
+  return (
+    <main className={classes.counter}>
+      <h1>Redux Counter</h1>
+      <div className={classes.value}>{counter}</div>
+      <div>
+        <button onClick={incrementHandler}>Increment</button>
+        <button onClick={increaseHandler}>Increment by 5</button>
+        <button onClick={decrementHandler}>Decrement</button>
+      </div>
+      <button onClick={toggleCounterHandler}>Toggle Counter</button>
+    </main>
+  );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    increment: () => dispatch({ type: "increment" }),
-    decrement: () => dispatch({ type: "decrement" }),
-  };
-};
-
-// connect is an high-ordered function, with two arguments
-// the first define the state, the second the actions
-// everything become accessible by props
-export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+export default Counter;

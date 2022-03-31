@@ -1,46 +1,53 @@
-import { createStore } from "redux";
+//import { createStore } from "redux";
+import { createSlice, configureStore } from "@reduxjs/toolkit";
 
-// of course you should consider these states as local
-// and use useState in the component instead of Redux
-// But this is just a redux demo
 const initialState = { counter: 0, showCounter: true };
 
-// when working with moltiple properties
-// you have always return the entire payload
-// even if the other state don't change
-const counterReducer = (state = initialState, action) => {
-  if (action.type === "increment") {
-    return {
-      counter: state.counter + 1,
-      showCounter: state.showCounter,
-    };
-  }
+//ONE STATE but different slices of our state
+// no need to write the action type. The toolkit recognizes the name automatically
+// no need to use if statements. It's also automatic.
+// we does't need to write the whole object. The toolkit overwrites automatically
+// you change just the state you need!
+const counterSlice = createSlice({
+  name: "counter",
+  initialState,
+  reducers: {
+    increment(state) {
+      state.counter++;
+    },
+    decrement(state) {
+      state.counter--;
+    },
+    //use exactly 'payload' to get the arguments from the component
+    increase(state, action) {
+      state.counter += action.payload;
+    },
+    toggleCounter(state) {
+      state.showCounter = !state.showCounter;
+    },
+  },
+});
 
-  // dinamisk reducer: you can get data from the action
-  if (action.type === "increase") {
-    return {
-      counter: state.counter + action.amount,
-      showCounter: state.showCounter,
-    };
-  }
+// connecting the store with the Redux toolkit reducer
+// const store = createStore(counterSlice.reducer);
 
-  if (action.type === "decrement") {
-    return {
-      counter: state.counter - 1,
-      showCounter: state.showCounter,
-    };
-  }
+// if you have many reducer (counterSlice, somethingElseSlice)
+// you can use configureStore and pass an object
 
-  if (action.type === "toggle") {
-    return {
-      counter: state.counter,
-      showCounter: !state.showCounter,
-    };
-  }
+// const store = configureStore({
+//   reducer: {
+//     counter: counterSlice.reducer,
+//     somethingElse: somethingElseSlice.reducer
+//   }
+// });
 
-  return state;
-};
+// but in this case we have just a reducer
+const store = configureStore({
+  reducer: counterSlice.reducer,
+});
 
-const store = createStore(counterReducer);
+// counterSlice.actions gives us all the action as methods
+// good idea to export it, you can call the methods from the component!
+export const counterAction = counterSlice.actions;
 
 export default store;

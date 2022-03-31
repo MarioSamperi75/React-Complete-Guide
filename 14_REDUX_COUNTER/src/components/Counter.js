@@ -12,6 +12,8 @@
 
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+
+import { counterAction } from "../store/index";
 import classes from "./Counter.module.css";
 
 const Counter = () => {
@@ -19,23 +21,23 @@ const Counter = () => {
   const counter = useSelector((state) => state.counter);
   const show = useSelector((state) => state.showCounter);
 
+  // use the Redux toolkit methods
   const incrementHandler = () => {
-    dispatch({ type: "increment" });
+    dispatch(counterAction.increment());
   };
 
-  // you can pass data to the reducer as a payload
-  // you will get it as action
+  // you can pass data as argument in the redux-toolkit method
   // of course no need to hardcode the amount...
   const increaseHandler = () => {
-    dispatch({ type: "increase", amount: 5 });
+    dispatch(counterAction.increase(5)); //{type: SOME_UNIQUE_IDENTIFIER , payload: 5}
   };
 
   const decrementHandler = () => {
-    dispatch({ type: "decrement" });
+    dispatch(counterAction.decrement());
   };
 
   const toggleCounterHandler = () => {
-    dispatch({ type: "toggle" });
+    dispatch(counterAction.toggleCounter());
   };
 
   return (

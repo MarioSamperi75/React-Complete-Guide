@@ -1,62 +1,22 @@
 import Card from "../UI/Card";
 import classes from "./ProductItem.module.css";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { cartActions } from "../../store/cart-slice";
 
-// we transfered the logic into the component to send the modified object to the db
-// the asynchronous code can't be used in the reducer
-// but the trasformation itself isn't asyncronous
-// so thas should be used in the reducers
-// it's just the request that is asynchronous!
-// this code is sub-optimal
-
 const ProductItem = (props) => {
-  const cart = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
-
   const { title, price, description, id } = props;
 
+  const dispatch = useDispatch();
+
   const addToCartHandler = () => {
-    const newTotalQuantity = cart.totalQuantity + 1;
-
-    const updatedItems = cart.items.slice(); // create copy via slice to avoid mutating original state
-    const existingItem = updatedItems.find((item) => item.id === id);
-    if (existingItem) {
-      const updatedItem = { ...existingItem }; // new object + copy existing properties to avoid state mutation
-      updatedItem.quantity++;
-      updatedItem.totalPrice = updatedItem.totalPrice + price;
-      const existingItemIndex = updatedItems.findIndex(
-        (item) => item.id === id
-      );
-      updatedItems[existingItemIndex] = updatedItem;
-    } else {
-      updatedItems.push({
-        id: id,
-        price: price,
-        quantity: 1,
-        totalPrice: price,
-        name: title,
-      });
-    }
-
-    const newCart = {
-      totalQuantity: newTotalQuantity,
-      items: updatedItems,
-    };
-
-    dispatch(cartActions.replaceCart(newCart));
-
-    // and then send Http request
-    // fetch('firebase-url', { method: 'POST', body: JSON.stringify(newCart) })
-
-    // dispatch(
-    //   cartActions.addItemToCart({
-    //     id,
-    //     title,
-    //     price,
-    //   })
-    // );
+    dispatch(
+      cartActions.addItemToCart({
+        id,
+        title,
+        price,
+      })
+    );
   };
 
   return (

@@ -5,10 +5,9 @@ import Cart from "./components/Cart/Cart";
 import Layout from "./components/Layout/Layout";
 import Products from "./components/Shop/Products";
 import Notification from "./components/UI/Notification";
-import { sendCartData } from "./store/cart-slice";
+import { fetchCartData, sendCartData } from "./components/UI/cart-actions";
 
 let isInitial = true;
-
 function App() {
   // we get notification from the store
   // and we pass them as props in the notification component
@@ -16,6 +15,11 @@ function App() {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const notification = useSelector((state) => state.ui.notification);
+
+  // fefetchCartData when loading the page
+  useEffect(() => {
+    dispatch(fetchCartData());
+  }, [dispatch]);
 
   // we moved all the asynchronous logic in slice-ui.js in the action creator
   //  we import that function (sendCartData) and we call it from here!

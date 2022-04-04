@@ -1,11 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// we use a chenged variable to check if the user updated the cart
+// or if it's just the initial fetching when app starts
+// in additem & removeItem methods, we set the value to true
+// this variable will be the condition to sendCartData in the useEffect in App.js
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
     items: [],
     totalQuantity: 0,
     totalAmount: 0,
+    changed: false,
   },
   reducers: {
     replaceCart(state, action) {
@@ -16,6 +21,8 @@ const cartSlice = createSlice({
       const newItem = action.payload;
       const existingItem = state.items.find((item) => item.id === newItem.id);
       state.totalQuantity++;
+      state.changed = true;
+
       if (!existingItem) {
         // all the modification happens in a immutable way because of redux-toolkit
         //otherwise we should create another variable, spread operator + modification + overwriting
@@ -35,6 +42,7 @@ const cartSlice = createSlice({
       const id = action.payload;
       const existingItem = state.items.find((item) => item.id === id);
       state.totalQuantity--;
+      state.changed = true;
       if (existingItem.quantity === 1) {
         state.items = state.items.filter((item) => item.id !== id);
       } else {

@@ -28,7 +28,11 @@ function App() {
       isInitial = false;
       return;
     }
-    dispatch(sendCartData(cart));
+    // the starting update when reloading should dispatch the action
+    // 'changed' avoid that
+    if (cart.changed) {
+      dispatch(sendCartData(cart));
+    }
   }, [cart, dispatch]);
 
   // we render conditionally notification and we pass the props from the store

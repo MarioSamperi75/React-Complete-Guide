@@ -29,7 +29,13 @@ export const fetchCartData = () => {
       const cartData = await fetchData();
       // cartData has already the structure we need
       //#2
-      dispatch(cartActions.replaceCart(cartData));
+      dispatch(
+        // we write the object to prevent items from becoming undefined => error!
+        cartActions.replaceCart({
+          items: cartData.items || [],
+          totalQuantity: cartData.totalQuantity,
+        })
+      );
     } catch (error) {
       dispatch(
         uiActions.showNotification({

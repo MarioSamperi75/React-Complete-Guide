@@ -1,17 +1,23 @@
+import { Link } from "react-router-dom";
+
+// The Link component allows to prevent the reloading of the page
+// reloading should mean losing all the states...
+
 const MainHeader = () => {
   return (
     <header>
       <nav>
         <ul>
           <li>
-            <a href="/welcome">Welcome</a>
+            <Link to="/welcome">Welcome</Link>
           </li>
         </ul>
         <ul>
           <li>
-            <a href="/products">Products</a>
+            <Link to="/products">Products</Link>
           </li>
         </ul>
+        Li
       </nav>
     </header>
   );

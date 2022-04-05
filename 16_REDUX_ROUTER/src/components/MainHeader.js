@@ -1,9 +1,11 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import classes from "./MainHeader.module.css";
 
-// The Link component allows to prevent the reloading of the page
-// reloading should mean losing all the states...
+// The NavLink component allows to prevent the reloading of the page
+// AND har en activeClassName attribute that handles atomatically
+// the highlighting of the active link
+// you have just to provide the class with the style that you prefer
 
 const MainHeader = () => {
   return (
@@ -11,10 +13,14 @@ const MainHeader = () => {
       <nav>
         <ul>
           <li>
-            <Link to="/welcome">Welcome</Link>
+            <NavLink activeClassName={classes.active} to="/welcome">
+              Welcome
+            </NavLink>
           </li>
           <li>
-            <Link to="/products">Products</Link>
+            <NavLink activeClassName={classes.active} to="/products">
+              Products
+            </NavLink>
           </li>
         </ul>
       </nav>

@@ -1,27 +1,34 @@
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import MainHeader from "./components/MainHeader";
 import ProductDetail from "./pages/productDetail";
 import Products from "./pages/Products";
 import Welcome from "./pages/Welcome";
 
 function App() {
-  // dynamic path segment=        :anyvalue
-  // in the ProducDetail component I will get access to that identifier
-  // in order to e.g. have access to a specific product in the DB
-  // and its details
+  // React router show ALL path that matches
+  // and "/products/:productId" for react router matches
+  // with both "/products" and "/products/:productId"
+
+  // to show just 1 path we have to wrapp all paths in a <Switch> component
+  // then the first matching path will be rendered
+  // we can change the order
+  // or add the attribute 'exact' to require a matching by exact path
+
   return (
     <div>
       <MainHeader />
       <main>
-        <Route path="/welcome">
-          <Welcome />
-        </Route>
-        <Route path="/products">
-          <Products />
-        </Route>
-        <Route path="/products/:productId">
-          <ProductDetail />
-        </Route>
+        <Switch>
+          <Route path="/welcome">
+            <Welcome />
+          </Route>
+          <Route path="/products" exact>
+            <Products />
+          </Route>
+          <Route path="/products/:productId">
+            <ProductDetail />
+          </Route>
+        </Switch>
       </main>
     </div>
   );

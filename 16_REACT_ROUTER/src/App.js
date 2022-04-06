@@ -1,4 +1,4 @@
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import MainHeader from "./components/MainHeader";
 import ProductDetail from "./pages/productDetail";
 import Products from "./pages/Products";
@@ -14,11 +14,18 @@ function App() {
   // we can change the order
   // or add the attribute 'exact' to require a matching by exact path
 
+  // you can use the Redirect component in every route you wont
+  // in our case it's very important to use 'exact'
+  // now if we just use the rout we will redirected to welcome!
+
   return (
     <div>
       <MainHeader />
       <main>
         <Switch>
+          <Route path="/" exact>
+            <Redirect to="/welcome" />
+          </Route>
           <Route path="/welcome">
             <Welcome />
           </Route>

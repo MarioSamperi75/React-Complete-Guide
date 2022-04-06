@@ -1,8 +1,12 @@
 import { Redirect, Route, Switch } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import NewQuote from "./pages/NewQuote";
+import NotFound from "./pages/NotFound";
 import QuoteDetail from "./pages/QuoteDetail";
 import Quotes from "./pages/Quotes";
+
+// we added a NotFound page AS LAST ROUTE
+// by using the wildcard path '*'
 
 function App() {
   return (
@@ -22,6 +26,10 @@ function App() {
 
         <Route path="/new-quote">
           <NewQuote />
+        </Route>
+
+        <Route path="*">
+          <NotFound />
         </Route>
       </Switch>
     </Layout>

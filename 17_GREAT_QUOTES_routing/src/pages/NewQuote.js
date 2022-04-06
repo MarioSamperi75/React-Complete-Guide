@@ -1,5 +1,9 @@
 const NewQuote = () => {
-  return <h1>NEW QUOTE</h1>;
+  return (
+    <section>
+      <h1>NEW QUOTE</h1>
+    </section>
+  );
 };
 
 export default NewQuote;

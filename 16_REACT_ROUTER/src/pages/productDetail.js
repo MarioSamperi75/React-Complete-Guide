@@ -1,5 +1,5 @@
 //useParams allows to have access to the param we add in the URL
-// http://localhost:3000/product-detail/something
+// http://localhost:3000/products/something
 //useParams allows to have access to "something"
 
 import { useParams } from "react-router-dom";

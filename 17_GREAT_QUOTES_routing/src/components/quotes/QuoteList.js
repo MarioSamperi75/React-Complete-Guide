@@ -32,9 +32,18 @@ const QuoteList = (props) => {
 
   const sortedQuotes = sortQuotes(props.quotes, isSortingAscending);
 
-  //just updating the URL
+  // just updating the URL
+  // in this case we can use location to write dynamically the path
   const changeSortingHandler = () => {
-    history.push("/quotes?sort=" + (isSortingAscending ? "desc" : "asc"));
+    // we can pass the argument as a string (with template literal)
+    // history.push(
+    //   `${location.pathname}?sort=${isSortingAscending ? "desc" : "asc"}`
+    // );
+    // but we could also use the object argument as alternative, maybe is more readable
+    history.push({
+      pathname: location.pathname,
+      search: `?sort=${isSortingAscending ? "desc" : "asc"}`,
+    });
   };
 
   return (

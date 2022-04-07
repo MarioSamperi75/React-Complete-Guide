@@ -1,4 +1,4 @@
-import { Link, Route, useParams } from "react-router-dom";
+import { Link, Route, useParams, useRouteMatch } from "react-router-dom";
 import Comments from "../components/comments/Comments";
 import HighlightedQuote from "../components/quotes/HighlightedQuote";
 
@@ -20,7 +20,13 @@ const DUMMY_QUOTES = [
   },
 ];
 
+// we use an UseRouteMatch to get info about the actual path
+// and write the address dynamically
+// .path  => quotes/:quoteid   (for paths)
+// .url   => quotes/p1         (for links)
+
 const QuoteDetail = () => {
+  const match = useRouteMatch();
   const params = useParams();
 
   const quote = DUMMY_QUOTES.find((quote) => quote.id === params.quoteId);
@@ -38,14 +44,14 @@ const QuoteDetail = () => {
   return (
     <section>
       <HighlightedQuote author={quote.author} text={quote.text} />
-      <Route path={`/quotes/${params.quoteId}`} exact>
+      <Route path={match.path} exact>
         <div className="centered">
-          <Link className="btn--flat" to={`/quotes/${params.quoteId}/comments`}>
+          <Link className="btn--flat" to={`${match.url}/comments`}>
             Load Comments
           </Link>
         </div>
       </Route>
-      <Route path="/quotes/:quotesId/comments">
+      <Route path={`${match.path}/comments`}>
         <Comments />
       </Route>
     </section>

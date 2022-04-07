@@ -25,8 +25,6 @@ const NewQuote = () => {
   // and we pass the data
   const addQuoteHandler = (quoteData) => {
     sendRequest(quoteData);
-
-    history.push("/quotes");
   };
 
   return (

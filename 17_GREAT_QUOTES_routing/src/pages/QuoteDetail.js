@@ -34,6 +34,7 @@ const QuoteDetail = () => {
   // so that it desappear when we go in the comments page
   // a way to render something conditionally
   // without managing states
+
   return (
     <section>
       <HighlightedQuote author={quote.author} text={quote.text} />

@@ -1,6 +1,12 @@
-import { NavLink } from 'react-router-dom';
+// #4 activeClassName not long available
+//    (no longer <NavLink activeClassName={classes.active} to='/welcome'>)
+//    you can have the same behavior
+//    by passing a function to the classeName attrbute, getting data as argument,
+//    and checking the isActive property with an if statement
 
-import classes from './MainHeader.module.css';
+import { NavLink } from "react-router-dom";
+
+import classes from "./MainHeader.module.css";
 
 const MainHeader = () => {
   return (
@@ -8,12 +14,18 @@ const MainHeader = () => {
       <nav>
         <ul>
           <li>
-            <NavLink activeClassName={classes.active} to='/welcome'>
+            <NavLink
+              className={(navData) => (navData.isActive ? classes.active : "")}
+              to="/welcome"
+            >
               Welcome
             </NavLink>
           </li>
           <li>
-            <NavLink activeClassName={classes.active} to='/products'>
+            <NavLink
+              className={(navData) => (navData.isActive ? classes.active : "")}
+              to="/products"
+            >
               Products
             </NavLink>
           </li>

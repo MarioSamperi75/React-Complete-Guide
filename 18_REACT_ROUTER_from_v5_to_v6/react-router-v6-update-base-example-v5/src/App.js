@@ -7,6 +7,7 @@
 //    that will match all the path starting with products
 //    the new react router search anyway the best matching
 //    even if we write it later: the order of the paths is no longer important
+// #4 remove activeClassName (see MainHeader.js)
 
 import { Route, Routes } from "react-router-dom";
 

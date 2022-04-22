@@ -5,6 +5,10 @@ import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import MainHeader from "./components/MainHeader";
 
+// the welcome path is always exact in React Router v6
+// BUT TO GET THE NESTED ROUTES YOU HAVE TO ADD A /*
+//  /welcome/new-user e.g.
+
 function App() {
   return (
     <div>
@@ -12,7 +16,7 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Navigate replace to="/welcome" />} />
-          <Route path="/welcome" element={<Welcome />} />
+          <Route path="/welcome/*" element={<Welcome />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:productId" element={<ProductDetail />} />
         </Routes>

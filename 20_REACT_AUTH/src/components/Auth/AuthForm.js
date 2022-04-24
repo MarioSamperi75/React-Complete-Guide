@@ -15,43 +15,61 @@ const AuthForm = () => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    const enteredMail = emailInputRef.current.value;
+    const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
 
-    // oprional validation
+    // optional validation
+
     setIsLoading(true);
+    let url;
+
+    // the signup and signin API is very similar
+    // but of course the URL is different
+    // so we can conditionally assign the URL to a variable
+    // an use the same code
     if (isLogin) {
-      console.log("LOGIN");
+      //firebase endpoint to sign in
+      url =
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyA3zOxsuKzbaaDE0gwN_CRlSBAQgYy_BFs";
     } else {
       //firebase endpoint to sign up
-      fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA3zOxsuKzbaaDE0gwN_CRlSBAQgYy_BFs",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            email: enteredMail,
-            password: enteredPassword,
-            returnSecureToken: true,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      ).then((res) => {
+      url =
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA3zOxsuKzbaaDE0gwN_CRlSBAQgYy_BFs";
+    }
+
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify({
+        email: enteredEmail,
+        password: enteredPassword,
+        returnSecureToken: true,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
         setIsLoading(false);
         if (res.ok) {
-          //...
+          return res.json();
         } else {
-          res.json().then((data) => {
+          return res.json().then((data) => {
             let errorMessage = "Authentication failed!";
             if (data && data.error && data.error.message) {
               errorMessage = data.error.message;
             }
-            alert(errorMessage);
+            //we forward the error to othe next catch
+            throw new Error(errorMessage);
           });
         }
+      })
+      // in case of login we will get in the data the authentication token too
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        alert(err.message);
       });
-    }
   };
 
   return (

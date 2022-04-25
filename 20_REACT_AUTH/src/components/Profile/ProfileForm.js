@@ -1,8 +1,12 @@
 import { useContext, useRef } from "react";
+// in react-router6 use history is replaced from useNavigate
+// check the corresponding 'converting-v5-v6' project
+import { useHistory } from "react-router-dom";
 import AuthContext from "../../store/auth-context";
 import classes from "./ProfileForm.module.css";
 
 const ProfileForm = () => {
+  const history = useHistory();
   const newPasswordInputRef = useRef();
   const authCtx = useContext(AuthContext);
 
@@ -31,6 +35,7 @@ const ProfileForm = () => {
       // (it's easy to manipulate, we should handle the error...)
       .then((res) => {
         //assumption: always succeed!
+        history.replace("/");
       });
   };
 

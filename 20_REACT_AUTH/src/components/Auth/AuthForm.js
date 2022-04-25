@@ -1,9 +1,13 @@
 import { useState, useRef, useContext } from "react";
+// in react-router6 use history is replaced from useNavigate
+// check the corresponding 'converting-v5-v6' project
+import { useHistory } from "react-router-dom";
 import AuthContext from "../../store/auth-context";
 
 import classes from "./AuthForm.module.css";
 
 const AuthForm = () => {
+  const history = useHistory();
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
 
@@ -72,6 +76,7 @@ const AuthForm = () => {
         // we use the login function from the context
         // and we pass the token we got in the data as argument
         authCtx.login(data.idToken);
+        history.replace("/");
       })
       .catch((err) => {
         alert(err.message);

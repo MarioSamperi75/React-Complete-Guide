@@ -9,6 +9,13 @@ const MainNavigation = () => {
 
   const isLoggedIn = authCtx.isLoggedIn;
 
+  //the server doesn't spare the token
+  //we have just to set token to null (see context logout())
+  const logoutHandler = () => {
+    authCtx.logout();
+    // optional: redirect the user
+  };
+
   return (
     <header className={classes.header}>
       <Link to="/">
@@ -28,7 +35,7 @@ const MainNavigation = () => {
           )}
           {isLoggedIn && (
             <li>
-              <button>Logout</button>
+              <button onClick={logoutHandler}>Logout</button>
             </li>
           )}
         </ul>

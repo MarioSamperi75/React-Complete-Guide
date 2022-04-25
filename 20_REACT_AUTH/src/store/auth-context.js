@@ -12,7 +12,7 @@ const AuthContext = React.createContext({
 // we create the context object
 // we export the wrapper AuthContextProvidercomponent
 // with the contextValue as props.value
-export const AuthContextProvider = () => {
+export const AuthContextProvider = (props) => {
   const [token, setToken] = useState(null);
 
   //!! convert a trusy/falsy statement in a boolean true/false
@@ -35,7 +35,7 @@ export const AuthContextProvider = () => {
 
   return (
     <AuthContext.Provider value={contextValue}>
-      props.children
+      {props.children}
     </AuthContext.Provider>
   );
 };

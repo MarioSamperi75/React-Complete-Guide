@@ -10,6 +10,10 @@ import AuthContext from "./store/auth-context";
 function App() {
   const authCtx = useContext(AuthContext);
 
+  // Navigation guards:
+  // you can protect you pages by adding conditional rendering
+  // based on the isLogging state coming from the context
+
   return (
     <Layout>
       <Switch>

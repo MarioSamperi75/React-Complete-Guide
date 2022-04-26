@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-// just for better autocompletion
 const AuthContext = React.createContext({
   token: "",
   isLoggedIn: false,
@@ -8,22 +7,28 @@ const AuthContext = React.createContext({
   logout: () => {},
 });
 
-// we create the methods to define the context object
-// we create the context object
-// we export the wrapper AuthContextProvidercomponent
-// with the contextValue as props.value
+// we store the token in local storage when logging in
+// and we delete it when logging out
+// and when initializing the token state
+// we will have a look to the local storage
+
 export const AuthContextProvider = (props) => {
-  const [token, setToken] = useState(null);
+  const initialToken = localStorage.getItem("token");
+  const [token, setToken] = useState(initialToken);
 
   //!! convert a trusy/falsy statement in a boolean true/false
   const userIsLoggedIn = !!token;
 
   const loginHandler = (token) => {
     setToken(token);
+    // if you want to store objects you need to convert to JSON
+    // in this case it's just a string
+    localStorage.setItem("token", token);
   };
 
   const logoutHandler = () => {
     setToken(null);
+    localStorage.removeItem("token");
   };
 
   const contextValue = {

@@ -73,9 +73,13 @@ const AuthForm = () => {
       })
       // in case of login we will get in the data the authentication token too
       .then((data) => {
+        // we calculate and pass the expiration Time in millisecond
+        const expirationTime = new Date(
+          new Date().getTime() + +data.expiresIn * 1000
+        );
         // we use the login function from the context
         // and we pass the token we got in the data as argument
-        authCtx.login(data.idToken);
+        authCtx.login(data.idToken, expirationTime.toISOString());
         history.replace("/");
       })
       .catch((err) => {

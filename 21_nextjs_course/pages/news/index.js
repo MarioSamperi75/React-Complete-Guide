@@ -1,11 +1,27 @@
-// we can also create a new path segment:
-// we create a new folder, we give it the path name we want
-// e.g. news, the index.js in this new map will be our-domain/news
-// and the 'other-file' in the map will be be our-domain/news/other-file
-// and so on... other-file can become a folder in /news with an index.js...
+// The traditional way to link
+// Problem: we lose all the reactivity:
+// we reload the page, no longer single page application
+// we lose all states... and so on
+
+import { Fragment } from "react";
 
 const NewsPage = () => {
-  return <h1>The News Page</h1>;
+  return (
+    <Fragment>
+      <h1>The News Page</h1>;
+      <ul>
+        <li>
+          <a href="/news/news1"> News 1</a>
+        </li>
+        <li>
+          <a href="/news/news2"> News 2</a>
+        </li>
+        <li>
+          <a href="/news/news3"> News 3</a>
+        </li>
+      </ul>
+    </Fragment>
+  );
 };
 
 export default NewsPage;

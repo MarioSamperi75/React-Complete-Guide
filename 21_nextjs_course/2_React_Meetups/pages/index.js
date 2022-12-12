@@ -36,8 +36,21 @@ const HomePage = (props) => {
   );
 };
 
+//  revalidation for every request
+//  req and res oject( auth, cookies..) 
+export const getServerSideProps = async (context) => {
+const req = context.req;
+const res = context.res;
+  // fetch data from api
+  return{
+    props: {
+      meetups: HK_MEETUP
+    }
+  };
+}
 
-export const getStaticProps = async () => {
+
+/* export const getStaticProps = async () => {
 
   // fetch data from api
   return{
@@ -46,8 +59,5 @@ export const getStaticProps = async () => {
     }, 
     revalidate: 10
   }
-
-
-
-}
+} */
 export default HomePage;

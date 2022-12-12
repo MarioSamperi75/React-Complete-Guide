@@ -40,9 +40,13 @@ const HomePage = (props) => {
 export const getStaticProps = async () => {
 
   // fetch data from api
-  props: {
-    meetups: HK_MEETUP
+  return{
+    props: {
+      meetups: HK_MEETUP
+    }
   }
+
+
 
 }
 export default HomePage;

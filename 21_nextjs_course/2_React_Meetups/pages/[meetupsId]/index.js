@@ -12,20 +12,23 @@ const MeetupDetails = () => {
   );
 };
 export const getStaticPaths = async (context) => {
+  const client = await MongoClient.connect(
+    "mongodb+srv://mariosss:Ssb2017!@cluster0.7wrvi.mongodb.net/meetups?retryWrites=true&w=majority"
+  );
+  const db = client.db();
+
+  const meetupsCollection = db.collection("meetups");
+  //find: first argument filters the documents  ( {} = all ); the second one filter the fields ( 1 = true )
+  // array of id that we will use to set the allowed paths
+  const meetups = await meetupsCollection.find({}, { _id: 1 }).toArray();
+
   return {
     fallback: false,
-    paths: [
-      {
-        params: {
-          meetupsId: "m1",
-        },
+    paths: meetups.map((meetup) => ({
+      params: {
+        meetupsId: meetup._id.toString(),
       },
-      {
-        params: {
-          meetupsId: "m2",
-        },
-      },
-    ],
+    })),
   };
 };
 
@@ -41,9 +44,8 @@ export const getStaticProps = async (context) => {
 
   const meetups = await meetupsCollection.find().toArray();
 
-
   return {
-    //fetch data for a sngle meetup
+    //fetch data for a single meetup
     props: {
       meetupData: {
         image:

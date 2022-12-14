@@ -1,13 +1,13 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 import MeetupDetail from "../../components/meetups/MeetupDetail";
 
-const MeetupDetails = () => {
+const MeetupDetails = (props) => {
   return (
     <MeetupDetail
-      image="https://www.celebritycruises.com/blog/content/uploads/2022/06/messina-italy-history-culture-view-hero-1600x890.jpg"
-      title="Messina"
-      address="Contrada Citola, 21"
-      description="Cooperativa prosperità"
+      image={props.meetupData.image}
+      title={props.meetupData.title}
+      address={props.meetupData.address}
+      description={props.meetupData.description}
     />
   );
 };
@@ -21,6 +21,8 @@ export const getStaticPaths = async (context) => {
   //find: first argument filters the documents  ( {} = all ); the second one filter the fields ( 1 = true )
   // array of id that we will use to set the allowed paths
   const meetups = await meetupsCollection.find({}, { _id: 1 }).toArray();
+
+  client.close();
 
   return {
     fallback: false,
@@ -41,20 +43,22 @@ export const getStaticProps = async (context) => {
   const db = client.db();
 
   const meetupsCollection = db.collection("meetups");
+  //find: first argument filters the documents  ( {} = all ); the second one filter the fields ( 1 = true )
+  // array of id that we will use to set the allowed paths
+  const selectedMeetup = await meetupsCollection.findOne({ _id: ObjectId(meetupsId) });
 
-  const meetups = await meetupsCollection.find().toArray();
+  client.close();
 
   return {
     //fetch data for a single meetup
     props: {
       meetupData: {
-        image:
-          "https://www.celebritycruises.com/blog/content/uploads/2022/06/messina-italy-history-culture-view-hero-1600x890.jpg",
-        id: meetupsId,
-        title: "Messina",
-        address: "Contrada Citola, 21",
-        description: "Cooperativa prosperità",
-      },
+        id: selectedMeetup._id.toString(),
+        title: selectedMeetup.title,
+        address: selectedMeetup.address,
+        image: selectedMeetup.image,
+        description: selectedMeetup.description
+      }
     },
     revalidate: 10,
   };

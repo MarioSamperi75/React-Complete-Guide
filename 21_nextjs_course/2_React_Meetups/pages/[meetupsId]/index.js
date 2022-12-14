@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { MongoClient } from "mongodb";
 import MeetupDetail from "../../components/meetups/MeetupDetail";
 
 const MeetupDetails = () => {
@@ -32,7 +32,16 @@ export const getStaticPaths = async (context) => {
 export const getStaticProps = async (context) => {
   const meetupsId = context.params.meetupsId;
 
-  // fetch data from api
+  const client = await MongoClient.connect(
+    "mongodb+srv://mariosss:Ssb2017!@cluster0.7wrvi.mongodb.net/meetups?retryWrites=true&w=majority"
+  );
+  const db = client.db();
+
+  const meetupsCollection = db.collection("meetups");
+
+  const meetups = await meetupsCollection.find().toArray();
+
+
   return {
     //fetch data for a sngle meetup
     props: {

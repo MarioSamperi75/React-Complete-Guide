@@ -1,11 +1,24 @@
 //import { useEffect, useState } from "react";
-import {MongoClient} from 'mongodb';
+import { Fragment } from "react";
+import Head from "next/head";
+import { MongoClient } from "mongodb";
 
 import MeetupList from "../components/meetups/MeetupList";
+import next from "next";
 
 const HomePage = (props) => {
-
-  return <MeetupList meetups={props.meetups} />;
+  return (
+    <Fragment>
+      <Head>
+        <title>React Meetups</title>
+        <meta   
+          name='description'
+          content='Pagina di prova per vedere se riesco a fare qualcosa con Next.js'
+        />
+      </Head>
+      <MeetupList meetups={props.meetups} />;
+    </Fragment>
+  );
 };
 
 export const getStaticProps = async () => {
@@ -22,12 +35,11 @@ export const getStaticProps = async () => {
   // and back to an ObjectId when posting to the database
   return {
     props: {
-      meetups: meetups.map((meetup)=>({
+      meetups: meetups.map((meetup) => ({
         title: meetup.title,
         address: meetup.address,
         image: meetup.image,
-        id : meetup._id.toString()
-
+        id: meetup._id.toString(),
       })),
     },
     revalidate: 10,

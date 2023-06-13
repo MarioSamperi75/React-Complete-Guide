@@ -1,27 +1,21 @@
-import {
-  Route,
-  RouterProvider,
-  createBrowserRouter,
-  //createBrowserRouter,
-  createRoutesFromElements,
-} from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Homepage from "./pages/Home";
 import ProductsPage from "./pages/Products";
+import RootLayout from "./pages/Root";
 
-const routeDefinitions = createRoutesFromElements(
-  <Route>
-    <Route path="/" element={<Homepage />} />
-    <Route path="/products" element={<ProductsPage />} />
-  </Route>
-);
+// You can have many Layouts with children and so on...
 
-const router = createBrowserRouter(routeDefinitions);
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <RootLayout />,
+    children: [
+      { path: "/", element: <Homepage /> },
+      { path: "/products", element: <ProductsPage /> },
+    ],
+  },
+]);
 
-/* const router = createBrowserRouter([
-  { path: "/", element: <Homepage /> },
-  { path: "/products", element: <ProductsPage /> },
-]); */
-//
 function App() {
   return <RouterProvider router={router} />;
 }

@@ -1,9 +1,15 @@
 // the a element will refresh the page. No good!
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // the link element will not refresh the page
 const Homepage = () => {
+  const navigate = useNavigate();
+
+  const navigateProgrammatically = () => {
+    navigate("/products");
+  };
+
   return (
     <>
       <h1>My Home Page</h1>
@@ -13,6 +19,9 @@ const Homepage = () => {
       <p>
         <Link to="/products">Go To Product with Link</Link>
       </p>
+      <button onClick={navigateProgrammatically}>
+        Navigate Programmatically
+      </button>
     </>
   );
 };

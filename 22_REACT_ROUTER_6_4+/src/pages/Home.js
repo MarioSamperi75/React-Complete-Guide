@@ -7,7 +7,7 @@ const Homepage = () => {
   const navigate = useNavigate();
 
   const navigateProgrammatically = () => {
-    navigate("/products");
+    navigate("products");
   };
 
   return (

@@ -11,7 +11,7 @@ const ProductsPage = () => {
       <h1>My Products Page</h1>
       {PRODUCTS.map((prod) => (
         <li key={prod.id}>
-          <Link to={`/products/${prod.id}`}>{prod.title}</Link>
+          <Link to={prod.id}>{prod.title}</Link>
         </li>
       ))}
     </>

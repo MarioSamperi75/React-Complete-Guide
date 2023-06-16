@@ -8,8 +8,9 @@ import EventsList from "../components/EventsList";
 
 function EventsPage() {
   const data = useLoaderData();
+  const events = data.events;
 
-  return <EventsList events={data} />;
+  return <EventsList events={events} />;
 }
 
 export default EventsPage;
@@ -20,8 +21,7 @@ export const loader = async () => {
   if (!response.ok) {
     // ...
   } else {
-    const resData = await response.json();
-    return resData.events; // the backend har an events object
-    //react router will make the return value available in the element (EventsPage)
+    return response;
+    // react router will extract the data automatically from the response object
   }
 };

@@ -14,7 +14,7 @@ function EventsPage() {
 
 export default EventsPage;
 
-export async function loader() {
+export const loader = async () => {
   const response = await fetch("http://localhost:8080/events");
 
   if (!response.ok) {
@@ -24,4 +24,4 @@ export async function loader() {
     return resData.events; // the backend har an events object
     //react router will make the return value available in the element (EventsPage)
   }
-}
+};

@@ -23,12 +23,11 @@ export const loader = async () => {
   const response = await fetch("http://localhost:8080/events");
 
   if (!response.ok) {
-    //return { isError: true, message: "Could not fetch events." };
-    throw new Error();
+    throw new Response(JSON.stringify({ message: "Could not fetch events." }), {
+      status: 500,
+    });
     // it will look after the nearest errorElement in the routing!
-    // we can throw what we want, the throw key activate the process
   } else {
     return response;
-    // react router will extract the data automatically from the response object
   }
 };

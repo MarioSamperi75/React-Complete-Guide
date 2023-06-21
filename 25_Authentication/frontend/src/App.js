@@ -11,9 +11,11 @@ import EventsRootLayout from "./pages/EventsRoot";
 import HomePage from "./pages/Home";
 import NewEventPage from "./pages/NewEvent";
 import RootLayout from "./pages/Root";
-import AuthForm from "./components/AuthForm";
 import { action as manipulateEventAction } from "./components/EventForm";
 import NewsletterPage, { action as newsletterAction } from "./pages/Newsletter";
+import AuthenticationPage, {
+  action as authAction,
+} from "./pages/Authentication";
 
 const router = createBrowserRouter([
   {
@@ -24,7 +26,8 @@ const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       {
         path: "auth",
-        element: <AuthForm />,
+        element: <AuthenticationPage />,
+        action: authAction,
       },
       {
         path: "events",

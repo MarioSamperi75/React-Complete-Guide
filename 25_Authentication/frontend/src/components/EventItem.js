@@ -3,7 +3,7 @@ import { Link, useSubmit, useRouteLoaderData } from "react-router-dom";
 import classes from "./EventItem.module.css";
 
 function EventItem({ event }) {
-  const token = useRouteLoaderData("route");
+  const token = useRouteLoaderData("root");
   const submit = useSubmit();
 
   function startDeleteHandler() {
